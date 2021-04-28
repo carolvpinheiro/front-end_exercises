@@ -18,7 +18,7 @@ Pokemon.propTypes = {
   averageWeight: PropTypes.shape({
     value: PropTypes.number,
     measurementUnit: PropTypes.string,
-  }),
+  })
 }
 
 export default Pokemon
