@@ -7,7 +7,7 @@ import pokemons from './data';
 function App() {
   return (
     <div>
-      {pokemons.map((pokemon) => <Pokemon pokemon={pokemon} />)}
+      {pokemons.map((pokemon, index) => <Pokemon key={index} pokemon={pokemon} />)}
     </div>
   );
 }
