@@ -1,9 +1,20 @@
-const peso = 60;
-const altura = 160;
+// const peso = 60;
+// const altura = 160;
+
+// calculandoIMC = (peso, altura) => {
+//   const calculoIMC = peso / Math.pow((altura/ 100), 2);
+//   console.log(`Seu IMC é: ${calculoIMC.toFixed(2)}`);
+// }
+
+// calculandoIMC(peso, altura);
+
+const readline = require('readline-sync');
+
+const qualPeso = readline.question('Qual o seu peso? ');
+const qualAltura = readline.question('Qual sua altura? ');
 
 calculandoIMC = (peso, altura) => {
- const calculoIMC = peso / Math.pow((altura/ 100), 2);
- console.log(`Seu IMC é: ${calculoIMC.toFixed(2)}`);
+  return peso / Math.pow((altura/ 100), 2).toFixed(2);
 }
 
-calculandoIMC(peso, altura);
+console.log(`Seu IMC é: ${calculandoIMC(qualPeso, qualAltura)}`);
