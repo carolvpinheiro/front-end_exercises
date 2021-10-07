@@ -1,87 +1,56 @@
-const defaultPlants = [
-{
-    id: 1,
-    breed: "Bromelia",
-    needsSun: false,
-    origin: "Argentina",
-    size: 102,
-    specialCare: {
-    waterFrequency: 3,
-    },
-},
-{
-    id: 2,
-    breed: "Orquidea",
-    size: 99,
-    needsSun: false,
-    origin: "Brazil",
-},
-];
+const express = require('express');
 
-let createdPlants = 0;
+const app = express();
 
-const initPlant = (id, breed, needsSun, origin, specialCare, size) => {
-const waterFrequency = needsSun ? size *  0.77 + (origin === 'Brazil' ? 8 : 7)
-    : (size / 2) *  1.33 + (origin === 'Brazil' ? 8 : 7)
-const newPlant = {
-    id,
-    breed,
-    needsSun,
-    origin,
-    specialCare: {
-    waterFrequency,
-    ...specialCare,
-    },
-    size,
-};
-return newPlant;
-};
+const plantsModule = require('./plants');
 
-const savePlants = () => {
-const plants = JSON.stringify(defaultPlants);
-localStorage.setItem("plants", plants);
-};
+app.use(express.json());
 
-const getPlants = () => {
-const plants = JSON.parse(localStorage.getItem("plants"));
-return plants;
-};
+app.get('/plants', (_req, res) => {
+  res.status(200).json(plantsModule.defaultPlants);
+})
 
-const getPlantById = (id) => {
-return defaultPlants.filter((plant) => plant.id === id);
-};
+app.get('/plant/:id', (req, res) => {
+  const { id } = req.params;
+  res.json(plantsModule.getPlantById(id));
+})
 
-const removePlantById = (id) => {
-const newPlants = defaultPlants.filter((plant) => plant.id !== id);
-localStorage.setItem("plants", JSON.stringify(newPlants));
-};
+app.delete('/plant/:id', (req, res) => {
+  const { id } = req.params;
+  res.json(plantsModule.removePlantById(id));  
+})
 
-const getPlantsThatNeedsSunWithId = (id) => {
-const filteredPlants = defaultPlants.filter((plant) => {
-    if (plant.needsSun && plant.id === id) {
-    if (plant.specialCare.waterFrequency > 2) {
-        return plant;
-    }
-    }
-});
-localStorage.setItem("plants", JSON.stringify(filteredPlants));
-return filteredPlants;
-};
+app.post('/plant/:id', (req, res) => {
+  const { id } = req.params;
+  const plant = req.body;
+  res.json(plantsModule.editPlant(id, plant));
+})
 
-const editPlant = (plantId, newPlant) => {
-return defaultPlants.map((plant) => {
-    if (plant.id === plantId) {
-    return newPlant;
-    }
-    return plant;
-});
-};
+app.post('/plant', (req, res) => {
+  const plant = req.body;
+  res.json(plantsModule.createNewPlant(plant));
+})
 
-const createNewPlant = (plant) => {
-const mappedPlant = initPlant({ ...plant });
-defaultPlants.push(mappedPlant);
-createdPlants++;
-localStorage.setItem("createdPlants", String(createdPlants));
-localStorage.setItem("plants", JSON.stringify(defaultPlants));
-return defaultPlants;
-};
+app.listen(3000, () => {
+  console.log('Aplicação tá on!');
+})
+
+
+// const savePlants = () => {
+// const plants = JSON.stringify(defaultPlants);
+// localStorage.setItem("plants", plants);
+// };
+
+
+// const getPlantsThatNeedsSunWithId = (id) => {
+// const filteredPlants = defaultPlants.filter((plant) => {
+//     if (plant.needsSun && plant.id === id) {
+//     if (plant.specialCare.waterFrequency > 2) {
+//         return plant;
+//     }
+//     }
+// });
+// localStorage.setItem("plants", JSON.stringify(filteredPlants));
+// return filteredPlants;
+// };
+
