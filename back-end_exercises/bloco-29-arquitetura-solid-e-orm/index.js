@@ -7,7 +7,7 @@ const plantsModule = require('./plants');
 app.use(express.json());
 
 app.get('/plants', (_req, res) => {
-  res.status(200).json(plantsModule.defaultPlants);
+  res.json(plantsModule.defaultPlants);
 })
 
 app.get('/plant/:id', (req, res) => {
@@ -37,5 +37,5 @@ app.get('/sunny/:id', (req, res) => {
 })
 
 app.listen(3000, () => {
-  console.log('Aplicação tá on!');
+  console.log('Refatorando aplicação com o princípio SOLID, na porta 3000');
 })
