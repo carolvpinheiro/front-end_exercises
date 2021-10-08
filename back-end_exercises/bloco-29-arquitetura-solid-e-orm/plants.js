@@ -67,5 +67,19 @@ const createNewPlant = (plant) => {
   return defaultPlants;
 };
 
-module.exports = { defaultPlants, getPlantById, removePlantById, editPlant, createNewPlant };
+const getPlantsThatNeedsSunWithId = (id) => {
+  const filteredPlants = defaultPlants.filter((plant) => {
+    return plant.needsSun && plant.id === parseInt(id);
+  });
+  return filteredPlants;
+};
+
+module.exports = {
+  defaultPlants,
+  getPlantById,
+  removePlantById,
+  editPlant,
+  createNewPlant,
+  getPlantsThatNeedsSunWithId
+};
     

@@ -31,26 +31,11 @@ app.post('/plant', (req, res) => {
   res.json(plantsModule.createNewPlant(plant));
 })
 
+app.get('/sunny/:id', (req, res) => {
+  const { id } = req.params;
+  res.json(plantsModule.getPlantsThatNeedsSunWithId(id));
+})
+
 app.listen(3000, () => {
   console.log('Aplicação tá on!');
 })
-
-
-// const savePlants = () => {
-// const plants = JSON.stringify(defaultPlants);
-// localStorage.setItem("plants", plants);
-// };
-
-
-// const getPlantsThatNeedsSunWithId = (id) => {
-// const filteredPlants = defaultPlants.filter((plant) => {
-//     if (plant.needsSun && plant.id === id) {
-//     if (plant.specialCare.waterFrequency > 2) {
-//         return plant;
-//     }
-//     }
-// });
-// localStorage.setItem("plants", JSON.stringify(filteredPlants));
-// return filteredPlants;
-// };
-
